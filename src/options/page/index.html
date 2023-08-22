@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="custom-elements/labeled-checkbox.js"></script>
+    <script src="custom-elements/select-one.js"></script>
+    <script src="custom-elements/select-many.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div id="general">
+      <labeled-checkbox id="save-using-bookmark">Save using bookmark</labeled-checkbox>
+    </div>
+
+    <hr>
+
+    <!-- START: General -->
+    <fieldset>
+      <legend>General</legend>
+
+      <labeled-checkbox id="general--block-play-on-page-load">Don't allow videos to play until you interact with the page</labeled-checkbox>
+      <select-one id="general--default-view-mode"
+                  opt-theater="Theater"
+                  opt-default="Default"
+                  opt-="No default">
+        Theater mode or default?
+      </select-one>
+      <labeled-checkbox id="general--auto-reject-cookie-popup-in-incognito-mode">Auto-reject the cookie popup in incognito windows</labeled-checkbox>
+    </fieldset>
+    <!-- END: General -->
+
+    <!-- START: Autoplay -->
+    <fieldset>
+      <legend>Autoplay</legend>
+
+      <labeled-checkbox id="autoplay--hide">Hide the autoplay button</labeled-checkbox>
+      <select-one id="autoplay--default"
+                  type="nullable-boolean"
+                  opt-true="On"
+                  opt-false="Off"
+                  opt-="No default">
+        Default autoplay state
+      </select-one>
+    </fieldset>
+    <!-- END: Autoplay -->
+
+    <!-- START: Chapters -->
+    <fieldset>
+      <legend>Chapters</legend>
+
+      <labeled-checkbox id="chapters--show-buttons">Show chapter skipping buttons (if video has chapters)</labeled-checkbox>
+    </fieldset>
+    <!-- END: Chapters -->
+
+    <!-- START: Miniplayer -->
+    <fieldset>
+      <legend>Miniplayer</legend>
+
+      <labeled-checkbox id="miniplayer--disable">Disable the miniplayer</labeled-checkbox>
+    </fieldset>
+    <!-- END: Miniplayer -->
+
+    <!-- START: Shorts -->
+    <fieldset>
+      <legend>Shorts</legend>
+
+      <labeled-checkbox id="shorts--redirect-to-real-video-page">Show real video page instead of shorts video page</labeled-checkbox>
+    </fieldset>
+    <!-- END: Shorts -->
+
+    <!-- START: Sponsors -->
+    <fieldset>
+      <legend>Sponsor Segments</legend>
+
+      <labeled-checkbox id="sponsors--mark">Show sponsor segments</labeled-checkbox>
+      <select-many id="sponsors--types"
+                   opt-sponsor="Sponsor"
+                   opt-selfpromo="Self-promo"
+                   opt-interaction="Interaction"
+                   opt-intro="Intro"
+                   opt-outro="Outro"
+                   opt-preview="Preview"
+                   opt-music_offtopic="Offtopic music"
+                   opt-filler="Filler">
+        Types of segments to act on
+      </select-many>
+      <!-- <labeled-checkbox id="sponsors--auto-skip">Auto-skip sponsor segments</labeled-checkbox> -->
+    </fieldset>
+    <!-- END: Sponsors -->
+  </body>
+</html>

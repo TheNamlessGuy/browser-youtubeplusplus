@@ -1,0 +1,58 @@
+{
+  "manifest_version": 2,
+  "name": "YouTube++",
+  "version": "0.0.2",
+  "description": "Does some helpful stuff with YouTube",
+  "author": "TheNamlessGuy",
+  "homepage_url": "https://github.com/TheNamlessGuy/youtubeplusplus",
+  "developer": {
+    "name": "TheNamlessGuy",
+    "url": "https://github.com/TheNamlessGuy/youtubeplusplus"
+  },
+
+  "icons": {
+    "16": "res/icon/16.png",
+    "19": "res/icon/19.png",
+    "32": "res/icon/32.png",
+    "38": "res/icon/38.png",
+    "48": "res/icon/48.png"
+  },
+
+  "permissions": [
+    "*://www.youtube.com/*",
+    "*://consent.youtube.com/*",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "bookmarks"
+  ],
+
+  "background": {
+    "scripts": [
+      "src/options/bookmark.js",
+      "src/options/opts.js",
+      "src/communication.js",
+      "src/tabs.js",
+      "src/sponsorblock.js",
+
+      "src/background.js"
+    ]
+  },
+
+  "content_scripts": [{
+    "matches": ["*://www.youtube.com/*", "*://www.consent.youtube.com/*"],
+    "js": ["src/injectables/injector.js"],
+    "run_at": "document_start"
+  }],
+
+  "options_ui": {
+    "page": "src/options/page/index.html",
+    "browser_style": true
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtubeplusplus@TheNamlessGuy.github.io"
+    }
+  }
+}
