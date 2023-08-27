@@ -133,17 +133,38 @@
     },
 
     elements: {
-      player: () => {
-        return document.getElementById('movie_player');
-      },
+      player: () => document.getElementById('movie_player'),
+      video: (player = null) => (player ?? window['yt++'].elements.player()).getElementsByTagName('video')[0],
+      chapterContainer: () => document.getElementsByClassName('ytp-chapters-container')[0],
+      progressBarContainer: () => document.getElementsByClassName('ytp-progress-bar-container')[0],
 
-      chapterContainer: () => {
-        return document.getElementsByClassName('ytp-chapters-container')[0];
-      },
+      currentChapter: (chapterContainer) => Array.from((chapterContainer ?? window['yt++'].elements.chapterContainer()).children).map(x => x.getElementsByClassName('ytp-play-progress')[0]).find(x => x.style.transform !== 'scaleX(1)'),
+    },
 
-      progressBarContainer: () => {
-        return document.getElementsByClassName('ytp-progress-bar-container')[0];
-      },
+    ClassWatcher: class ClassWatcher { // https://stackoverflow.com/a/53914092
+      constructor(target, clazz, onAdded, onRemoved) {
+        this.target = target;
+        this.class = clazz;
+        this.onAdded = onAdded;
+        this.onRemoved = onRemoved;
+
+        this.previousState = this.target.classList.contains(this.class);
+
+        const observer = new MutationObserver(this._onMutation.bind(this));
+        observer.observe(this.target, {attributes: true});
+      }
+
+      _onMutation(mutations) {
+        for (let mutation of mutations) {
+          if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+
+          const currentState = this.target.classList.contains(this.class);
+          if (this.previousState !== currentState) {
+            this.previousState = currentState;
+            this.previousState ? this.onAdded() : this.onRemoved();
+          }
+        }
+      }
     },
   };
 

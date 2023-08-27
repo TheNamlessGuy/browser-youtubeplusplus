@@ -69,7 +69,7 @@
 
     playerOverlay.appendChild(skipBtnContainer);
 
-    player.getElementsByTagName('video')[0].addEventListener('timeupdate', () => {
+    window['yt++'].elements.video(player).addEventListener('timeupdate', () => {
       if (window['yt++'].adIsPlaying()) {
         progressBarOverlay.style.display = 'none';
         playerOverlay.style.display = 'none';
@@ -84,7 +84,7 @@
   }
 
   function autoSkip() {
-    player.getElementsByTagName('video')[0].addEventListener('timeupdate', () => {
+    window['yt++'].elements.video(player).addEventListener('timeupdate', () => {
       if (window['yt++'].adIsPlaying()) {
         return;
       }
