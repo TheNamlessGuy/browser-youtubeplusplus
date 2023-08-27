@@ -17,6 +17,8 @@ class SelectOneElement extends HTMLElement {
     this._select.addEventListener('change', () => this.dispatchEvent(new Event('change')));
     container.appendChild(this._select);
 
+    Array.from(this.getElementsByTagName('option')).forEach(x => this._select.appendChild(x));
+
     const opts = this.getAttributeNames()
       .filter(x => x.startsWith('opt-'))
       .map(x => { return {value: x.substring(4), display: this.getAttribute(x)}; });

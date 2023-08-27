@@ -4,6 +4,12 @@ const Opts = {
       blockPlayOnPageLoad: true,
       defaultViewMode: 'theater',
       autoRejectCookiePopupInIncognitoMode: true,
+      displayProgressBarWhenCollapsed: true,
+    },
+
+    ads: {
+      block: true,
+      channelExceptions: [], // TODO
     },
 
     autoplay: {
@@ -32,6 +38,16 @@ const Opts = {
 
   init: async function() {
     let {opts, changed} = await BookmarkOpts.init(Opts._default);
+
+    if (!('ads' in opts)) { // Added in v0.0.3
+      opts.ads = JSON.parse(JSON.stringify(Opts._default.ads));
+      changed = true;
+    }
+
+    if (!('displayProgressBarWhenCollapsed' in opts.general)) { // Added in v0.0.3
+      opts.general.displayProgressBarWhenCollapsed = Opts._default.general.displayProgressBarWhenCollapsed;
+      changed = true;
+    }
 
     if (changed) {
       await Opts.set(opts);

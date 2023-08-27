@@ -28,8 +28,17 @@
         Theater mode or default?
       </select-one>
       <labeled-checkbox id="general--auto-reject-cookie-popup-in-incognito-mode">Auto-reject the cookie popup in incognito windows</labeled-checkbox>
+      <labeled-checkbox id="general--display-progress-bar-when-collapsed">Display the video progress bar when it's normally hidden</labeled-checkbox>
     </fieldset>
     <!-- END: General -->
+
+    <!-- START: Ads -->
+    <fieldset>
+      <legend>Ads</legend>
+
+      <labeled-checkbox id="ads--block">Block ads</labeled-checkbox>
+    </fieldset>
+    <!-- END: Ads -->
 
     <!-- START: Autoplay -->
     <fieldset>
@@ -76,15 +85,15 @@
 
       <labeled-checkbox id="sponsors--mark">Show sponsor segments</labeled-checkbox>
       <select-many id="sponsors--types"
-                   opt-sponsor="Sponsor"
-                   opt-selfpromo="Self-promo"
-                   opt-interaction="Interaction"
-                   opt-intro="Intro"
-                   opt-outro="Outro"
-                   opt-preview="Preview"
-                   opt-music_offtopic="Offtopic music"
-                   opt-filler="Filler">
-        Types of segments to act on
+                   label="Types of segments to act on">
+        <option value="sponsor"        style="color: #8033FF;">Sponsor</option>
+        <option value="selfpromo"      style="color: #00FF00;">Self-promo</option>
+        <option value="interaction"    style="color: #FF5733;">Interaction</option>
+        <option value="intro"          style="color: #33E9FF;">Intro</option>
+        <option value="outro"          style="color: #E6FF33;">Outro</option>
+        <option value="preview"        style="color: #FFA7FB;">Preview</option>
+        <option value="music_offtopic" style="color: #E8FFA7;">Offtopic music</option>
+        <option value="filler"         style="color: #232AFF;">Filler</option>
       </select-many>
       <!-- <labeled-checkbox id="sponsors--auto-skip">Auto-skip sponsor segments</labeled-checkbox> -->
     </fieldset>

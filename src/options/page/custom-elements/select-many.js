@@ -22,8 +22,11 @@ class SelectManyElement extends HTMLElement {
 
     const container = document.createElement('div');
 
-    const label = document.createElement('label');
-    label.innerText = this.innerText;
+    let label = this.getElementsByTagName('label')[0];
+    if (label == null) {
+      label = document.createElement('label');
+      label.innerText = this.getAttribute('label');
+    }
     container.appendChild(label);
 
     const select = document.createElement('select');
@@ -48,6 +51,13 @@ class SelectManyElement extends HTMLElement {
     this._display.style.display = 'none';
     select.appendChild(this._display);
 
+    Array.from(this.getElementsByTagName('option')).forEach(x => {
+      x._display = x.innerText;
+      this._options.push(x);
+      this._setText(x.value);
+      select.appendChild(x);
+    })
+
     const opts = this.getAttributeNames()
       .filter(x => x.startsWith('opt-'))
       .map(x => { return {value: x.substring(4), display: this.getAttribute(x)}; });
@@ -56,7 +66,7 @@ class SelectManyElement extends HTMLElement {
       option.value = opt.value;
       option._display = opt.display;
       this._options.push(option);
-      this._setText(opt.value, false);
+      this._setText(opt.value);
       select.appendChild(option);
     }
 

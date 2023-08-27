@@ -27,7 +27,14 @@
       block.style.width = (((segment.end - segment.start) / duration) * 100) + '%';
       block.style.height = '100%';
       block.style.backgroundColor = {
-        'sponsor': '#0F0',
+        'sponsor':        '#8033FF',
+        'selfpromo':      '#00FF00',
+        'interaction':    '#FF5733',
+        'intro':          '#33E9FF',
+        'outro':          '#E6FF33',
+        'preview':        '#FFA7FB',
+        'music_offtopic': '#E8FFA7',
+        'filler':         '#232AFF',
       }[segment.category] ?? '#F00';
       progressBarOverlay.appendChild(block);
 

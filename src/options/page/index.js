@@ -76,7 +76,9 @@ async function save() {
     saveUsingBookmarkOverride: document.getElementById('save-using-bookmark').value,
   };
 
-  const elements = getAllCustomElements();
+  const elements = getAllCustomElements().filter(x => ![
+    'save-using-bookmark',
+  ].includes(x.id));
   for (const element of elements) {
     const chain = convertIDToOptChain(element.id);
     const last = chain.pop();

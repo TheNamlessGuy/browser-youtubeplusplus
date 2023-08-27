@@ -19,7 +19,6 @@ Drag and drop the file into your Firefox instance to install it.
 The download page is [here](https://addons.mozilla.org/firefox/addon/youtubeplusplus/)
 
 ## Future plans
-* Show progress bar at bottom of the video all the time. Sort of like how ads look
 * Sponsor segment autoskip
 * Hide shorts
 * Default quality selection
@@ -28,3 +27,5 @@ The download page is [here](https://addons.mozilla.org/firefox/addon/youtubeplus
 * Download video
 * Download audio
 * Download playlist as video or audio
+* Skip past the "Are you sure you want to leave YouTube?" thing when clicking on external links
+* Allow some channels to have ads
