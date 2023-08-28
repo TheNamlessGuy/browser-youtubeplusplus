@@ -101,4 +101,18 @@ window.addEventListener('DOMContentLoaded', async () => {
   getAllCustomElements().forEach(x => x.addEventListener('change', save));
 
   await load();
+
+  {
+    const sponsorTypes = document.getElementById('sponsors--types');
+    const sponsorAutoskip = document.getElementById('sponsors--auto-skip');
+    const func = () => {
+      const value = sponsorTypes.value;
+      const options = sponsorAutoskip.options;
+      for (const opt of options) {
+        sponsorAutoskip.disableOption(opt, !value.includes(opt));
+      }
+    };
+    sponsorTypes.addEventListener('change', func);
+    func();
+  }
 });

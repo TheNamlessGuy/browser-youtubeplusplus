@@ -14,7 +14,7 @@ class SelectManyElement extends HTMLElement {
     const option = this._options.find(x => x.value === value);
     option.innerText = `${SelectManyElement._icons[checked]} ${option._display}`;
 
-    this._display.innerText = `Selected: ${this._value.length}`;
+    this._display.innerText = `Selected: ${this._value.length}/${this.activeOptions.length}`;
   }
 
   constructor() {
@@ -77,10 +77,25 @@ class SelectManyElement extends HTMLElement {
     this.attachShadow({mode: 'closed'}).appendChild(container);
   }
 
-  get value() {
-    return this._value;
+  disableOption(value, shouldBeDisabled = true) {
+    const option = this._options.find(x => x.value === value);
+
+    if (!shouldBeDisabled) {
+      option.style.display = null;
+    } else {
+      option.style.display = 'none';
+
+      const idx = this._value.indexOf(value);
+      if (idx !== -1) {
+        this._value.splice(idx, 1);
+        this.dispatchEvent(new Event('change'));
+      }
+    }
+
+    this._setText(value);
   }
 
+  get value() { return this._value; }
   set value(value) {
     this._value = value;
 
@@ -88,4 +103,7 @@ class SelectManyElement extends HTMLElement {
       this._setText(opt.value);
     }
   }
+
+  get options() { return this._options.map(x => x.value); }
+  get activeOptions() { return this._options.filter(x => x.style.display == ''); }
 }

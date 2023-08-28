@@ -26,7 +26,6 @@ const Communication = {
   },
 
   send: function(action, extras = {}) {
-    // console.log('SENDING', {action, extras, hasPort: !!Communication._port});
     if (Communication._port != null) {
       Communication._port.postMessage({action: action, ...JSON.parse(JSON.stringify(extras))});
     }

@@ -17,22 +17,30 @@ const Opts = {
       hide: true,
     },
 
-    miniplayer: {
-      disable: true,
-    },
-
     chapters: {
       showButtons: true,
     },
 
-    sponsors: {
-      mark: true,
-      autoSkip: false, // TODO
-      types: ['sponsor'],
+    miniplayer: {
+      disable: true,
     },
 
     shorts: {
       redirectToRealVideoPage: true,
+      hideFromSubPage: true,
+    },
+
+    sidebar: {
+      hideShorts: true,
+      hideExplore: true,
+      hideMoreFromYt: true,
+      hideBrowseChannelsFromSubscriptions: true,
+    },
+
+    sponsors: {
+      mark: true,
+      autoSkip: [],
+      types: ['sponsor'],
     },
   },
 
@@ -46,6 +54,21 @@ const Opts = {
 
     if (!('displayProgressBarWhenCollapsed' in opts.general)) { // Added in v0.0.3
       opts.general.displayProgressBarWhenCollapsed = Opts._default.general.displayProgressBarWhenCollapsed;
+      changed = true;
+    }
+
+    if (!('sidebar' in opts)) { // Added in v0.0.5
+      opts.sidebar = JSON.parse(JSON.stringify(Opts._default.sidebar));
+      changed = true;
+    }
+
+    if ([true, false].includes(opts.sponsors.autoSkip)) { // Changed to array in v0.0.5. No backwards compatibility needed
+      opts.sponsors.autoSkip = Opts._default.sponsors.autoSkip;
+      changed = true;
+    }
+
+    if (!('hideFromSubPage' in opts.shorts)) {
+      opts.shorts.hideFromSubPage = Opts._default.shorts.hideFromSubPage;
       changed = true;
     }
 

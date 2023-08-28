@@ -16,7 +16,7 @@
   const containerHeight = container.getBoundingClientRect().height;
 
   const style = document.createElement('style');
-  style.textContent = `.ytp-chrome-bottom.ytpp-hide { opacity: 1 !important; bottom: -${bottomHeight - containerHeight}px !important; }`;
+  style.textContent = `.ytp-chrome-bottom.ytpp-hide { opacity: 0.3 !important; bottom: -${bottomHeight - containerHeight}px !important; }`;
   document.head.appendChild(style);
 
   const player = window['yt++'].elements.player();

@@ -7,10 +7,11 @@ Firefox plugin with some (optional) YouTube quality of life stuff:
 * Show/hide autoplay button
 * Disable miniplayer functionality
 * Show chapter skip forward/back buttons
-* Mark sponsor segments (uses SponsorBlock database)
+* Mark (and optionally auto-skip) sponsor segments (uses SponsorBlock database)
 * Redirect from "shorts" to real video page
 * Ad blocking
 * Showing the video progress bar when it's normally hidden
+* Hide various sidebar entries
 
 ## Get
 ### Manual download
@@ -21,8 +22,6 @@ Drag and drop the file into your Firefox instance to install it.
 The download page is [here](https://addons.mozilla.org/firefox/addon/youtubeplusplus/)
 
 ## Future plans
-* Sponsor segment autoskip
-* Hide shorts
 * Default quality selection
 * Hide livestreams and preview/unwatchable/whatever videos from subscription page
 * "Continue watching?" popup auto-accept

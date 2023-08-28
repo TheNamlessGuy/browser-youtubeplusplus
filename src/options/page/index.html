@@ -76,16 +76,27 @@
       <legend>Shorts</legend>
 
       <labeled-checkbox id="shorts--redirect-to-real-video-page">Show real video page instead of shorts video page</labeled-checkbox>
+      <labeled-checkbox id="shorts--hide-from-sub-page">Hide "Shorts" section from subscription page</labeled-checkbox>
     </fieldset>
     <!-- END: Shorts -->
+
+    <!-- START: Sidebar -->
+    <fieldset>
+      <legend>Sidebar</legend>
+
+      <labeled-checkbox id="sidebar--hide-shorts">Hide "Shorts" from sidebar</labeled-checkbox>
+      <labeled-checkbox id="sidebar--hide-explore">Hide "Explore" from sidebar</labeled-checkbox>
+      <labeled-checkbox id="sidebar--hide-more-from-yt">Hide "More from YouTube" from sidebar</labeled-checkbox>
+      <labeled-checkbox id="sidebar--hide-browse-channels-from-subscriptions">Hide "Browse channels" from the "subscriptions" entry in the sidebar</labeled-checkbox>
+    </fieldset>
+    <!-- END: Sidebar -->
 
     <!-- START: Sponsors -->
     <fieldset>
       <legend>Sponsor Segments</legend>
 
       <labeled-checkbox id="sponsors--mark">Show sponsor segments</labeled-checkbox>
-      <select-many id="sponsors--types"
-                   label="Types of segments to act on">
+      <select-many id="sponsors--types" label="Types of segments to look for">
         <option value="sponsor"        style="color: #8033FF;">Sponsor</option>
         <option value="selfpromo"      style="color: #00FF00;">Self-promo</option>
         <option value="interaction"    style="color: #FF5733;">Interaction</option>
@@ -95,7 +106,16 @@
         <option value="music_offtopic" style="color: #E8FFA7;">Offtopic music</option>
         <option value="filler"         style="color: #232AFF;">Filler</option>
       </select-many>
-      <!-- <labeled-checkbox id="sponsors--auto-skip">Auto-skip sponsor segments</labeled-checkbox> -->
+      <select-many id="sponsors--auto-skip" label="Types of segments to automatically skip">
+        <option value="sponsor"        style="color: #8033FF;">Sponsor</option>
+        <option value="selfpromo"      style="color: #00FF00;">Self-promo</option>
+        <option value="interaction"    style="color: #FF5733;">Interaction</option>
+        <option value="intro"          style="color: #33E9FF;">Intro</option>
+        <option value="outro"          style="color: #E6FF33;">Outro</option>
+        <option value="preview"        style="color: #FFA7FB;">Preview</option>
+        <option value="music_offtopic" style="color: #E8FFA7;">Offtopic music</option>
+        <option value="filler"         style="color: #232AFF;">Filler</option>
+      </select-many>
     </fieldset>
     <!-- END: Sponsors -->
   </body>

@@ -1,7 +1,7 @@
 (async function() {
   const segments = window['yt++'].data.json('segments');
   const _mark = window['yt++'].data.bool('mark');
-  const _autoSkip = window['yt++'].data.bool('autoSkip');
+  const _autoSkip = window['yt++'].data.array('autoSkip');
 
   await window['yt++'].waitForOptional(() => window['yt++'].elements.player() != null);
   const player = window['yt++'].elements.player();
@@ -91,12 +91,12 @@
 
       const time = player.getCurrentTime();
       const segment = segments.find(x => x.start <= time && x.end > time);
-      if (segment != null) {
+      if (segment != null && _autoSkip.includes(segment.category)) {
         player.seekTo(segment.end); // This pauses the video for whatever reason
       }
     });
   }
 
   if (_mark) { mark(); }
-  if (_autoSkip) { autoSkip(); }
+  autoSkip();
 }());

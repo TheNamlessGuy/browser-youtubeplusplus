@@ -25,12 +25,16 @@
     const url = new URL(window.location.href);
 
     if (opts.general.autoRejectCookiePopupInIncognitoMode && window['yt++'].incognito) { inject('reject-cookies'); }
+    if (opts.sidebar.hideShorts) { inject('hide-shorts-from-sidebar'); }
+    if (opts.sidebar.hideExplore) { inject('hide-explore-from-sidebar'); }
+    if (opts.sidebar.hideMoreFromYt) { inject('hide-more-from-yt-from-sidebar'); }
+    if (opts.sidebar.hideBrowseChannelsFromSubscriptions) { inject('hide-browse-channels-from-sidebar'); }
     if (url.pathname === '/watch') {
       if (opts.ads.block) { inject('block-ads', {channelExceptions: opts.ads.channelExceptions}); }
       if (opts.general.blockPlayOnPageLoad) { inject('stop-initial-play'); }
       if (opts.miniplayer.disable) { inject('disable-miniplayer'); }
-      if (opts.autoplay.hide) { inject('hide-autoplay'); }
       if (opts.autoplay.default != null) { inject('toggle-autoplay', {value: opts.autoplay.default}); }
+      if (opts.autoplay.hide) { inject('hide-autoplay'); }
       if (opts.general.defaultViewMode != null) { inject('to-view-mode', {mode: opts.general.defaultViewMode}); }
       if (opts.chapters.showButtons) { inject('show-chapter-buttons'); }
       if (opts.general.displayProgressBarWhenCollapsed) { inject('force-showing-progressbar'); }
@@ -49,6 +53,8 @@
           }
         });
       }
+    } else if (url.pathname === '/feed/subscriptions') {
+      if (opts.shorts.hideFromSubPage) { inject('hide-shorts-from-subpage'); }
     }
   });
 
@@ -142,7 +148,7 @@
     },
 
     ClassWatcher: class ClassWatcher { // https://stackoverflow.com/a/53914092
-      constructor(target, clazz, onAdded, onRemoved) {
+      constructor(target, clazz, onAdded, onRemoved = () => {}) {
         this.target = target;
         this.class = clazz;
         this.onAdded = onAdded;
@@ -150,8 +156,8 @@
 
         this.previousState = this.target.classList.contains(this.class);
 
-        const observer = new MutationObserver(this._onMutation.bind(this));
-        observer.observe(this.target, {attributes: true});
+        this._observer = new MutationObserver(this._onMutation.bind(this));
+        this.observe();
       }
 
       _onMutation(mutations) {
@@ -161,10 +167,13 @@
           const currentState = this.target.classList.contains(this.class);
           if (this.previousState !== currentState) {
             this.previousState = currentState;
-            this.previousState ? this.onAdded() : this.onRemoved();
+            this.previousState ? this.onAdded(this) : this.onRemoved(this);
           }
         }
       }
+
+      observe() { this._observer.observe(this.target, {attributes: true}); }
+      disconnect() { this._observer.disconnect(); }
     },
   };
 
