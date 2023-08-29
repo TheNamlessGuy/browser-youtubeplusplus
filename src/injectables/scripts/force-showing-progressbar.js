@@ -11,12 +11,15 @@
   if (bottom == null) { return; }
   const bottomHeight = bottom.getBoundingClientRect().height;
 
+  const top = document.getElementsByClassName('ytp-chrome-top')[0];
+  if (top == null) { return; }
+
   const container = bottom.getElementsByClassName('ytp-progress-bar-container')[0];
   if (container == null) { return; }
   const containerHeight = container.getBoundingClientRect().height;
 
   const style = document.createElement('style');
-  style.textContent = `.ytp-chrome-bottom.ytpp-hide { opacity: 0.3 !important; bottom: -${bottomHeight - containerHeight}px !important; }`;
+  style.textContent = `.ytp-chrome-bottom.ytpp-hide { opacity: 0.3 !important; bottom: -${bottomHeight - containerHeight}px !important; } .ytp-chrome-top.ytpp-hide { display: none; }`;
   document.head.appendChild(style);
 
   const player = window['yt++'].elements.player();
@@ -35,6 +38,7 @@
     if (firstTime) {
       firstTime = false;
       actuallyHidden = true;
+      top.classList.add('ytpp-hide');
       bottom.classList.add('ytpp-hide');
     }
 
@@ -53,6 +57,7 @@
   }, () => {
     if (!actuallyHidden) {
       firstTime = true;
+      top.classList.remove('ytpp-hide');
       bottom.classList.remove('ytpp-hide');
     }
   });
