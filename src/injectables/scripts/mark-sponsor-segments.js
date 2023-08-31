@@ -1,5 +1,6 @@
 (async function() {
   const segments = window['yt++'].data.json('segments');
+  const skipHotkey = window['yt++'].data.json('skipHotkey');
   const _mark = window['yt++'].data.bool('mark');
   const _autoSkip = window['yt++'].data.array('autoSkip');
 
@@ -59,7 +60,7 @@
     skipBtn.addEventListener('click', () => {
       const time = player.getCurrentTime();
       const segment = segments.find(x => x.start <= time && x.end >= time);
-      player.seekTo(segment.end);
+      if (segment != null) { player.seekTo(segment.end); }
     });
     skipBtnContainer.appendChild(skipBtn);
 
@@ -81,6 +82,8 @@
         playerOverlay.style.display = segment == null ? 'none' : null;
       }
     });
+
+    window['yt++'].onHotkeyPressed(skipHotkey, () => skipBtn.click());
   }
 
   function autoSkip() {

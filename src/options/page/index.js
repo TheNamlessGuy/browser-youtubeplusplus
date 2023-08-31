@@ -2,6 +2,7 @@ const elements = {
   'labeled-checkbox': LabeledCheckboxElement,
   'select-one': SelectOneElement,
   'select-many': SelectManyElement,
+  'hotkey-selector': HotkeySelectorElement,
 };
 
 const BackgroundPage = {
@@ -102,7 +103,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   await load();
 
-  {
+  { // Sponsor types -> Sponsor auto-skip connection
     const sponsorTypes = document.getElementById('sponsors--types');
     const sponsorAutoskip = document.getElementById('sponsors--auto-skip');
     const func = () => {
@@ -113,6 +114,15 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     };
     sponsorTypes.addEventListener('change', func);
+    func();
+  }
+
+  { // Show sponsor segments -> Skip ads hotkey connection
+    const showSponsorSegments = document.getElementById('sponsors--mark');
+    const skipHotkey = document.getElementById('sponsors--skip-hotkey');
+
+    const func = () => skipHotkey.disable(!showSponsorSegments.value);
+    showSponsorSegments.addEventListener('change', func);
     func();
   }
 });

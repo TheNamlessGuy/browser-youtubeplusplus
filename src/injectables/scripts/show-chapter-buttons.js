@@ -15,9 +15,11 @@
   }
 
   await window['yt++'].waitForOptional(() => window['yt++'].elements.chapterContainer() != null);
-  await window['yt++'].timeout(1000);
 
-  if (window['yt++'].elements.chapterContainer().children.length < 2) { return; }
+  const chapterContainer = window['yt++'].elements.chapterContainer();
+  await window['yt++'].waitForOptional(() => chapterContainer.children.length > 1);
+
+  if (chapterContainer.children.length < 2) { return; }
 
   const controls = document.getElementsByClassName('ytp-left-controls')[0];
   const volume = controls.getElementsByClassName('ytp-volume-area')[0];

@@ -41,34 +41,56 @@ const Opts = {
       mark: true,
       autoSkip: [],
       types: ['sponsor'],
+      skipHotkey: {key: 's', alt: false, ctrl: false, shift: false},
     },
   },
+
+  _v: () => browser.runtime.getManifest().version,
 
   init: async function() {
     let {opts, changed} = await BookmarkOpts.init(Opts._default);
 
-    if (!('ads' in opts)) { // Added in v0.0.3
-      opts.ads = JSON.parse(JSON.stringify(Opts._default.ads));
-      changed = true;
+    const currentVersion = Opts._v();
+    const optsVersion = opts._v ?? '0.0.0';
+
+    if (optsVersion < '0.0.3') {
+      if (!('ads' in opts)) { // Added
+        opts.ads = JSON.parse(JSON.stringify(Opts._default.ads));
+        changed = true;
+      }
+
+      if (!('displayProgressBarWhenCollapsed' in opts.general)) { // Added
+        opts.general.displayProgressBarWhenCollapsed = Opts._default.general.displayProgressBarWhenCollapsed;
+        changed = true;
+      }
     }
 
-    if (!('displayProgressBarWhenCollapsed' in opts.general)) { // Added in v0.0.3
-      opts.general.displayProgressBarWhenCollapsed = Opts._default.general.displayProgressBarWhenCollapsed;
-      changed = true;
+    if (optsVersion < '0.0.5') {
+      if (!('sidebar' in opts)) { // Added
+        opts.sidebar = JSON.parse(JSON.stringify(Opts._default.sidebar));
+        changed = true;
+      }
+
+      if ([true, false].includes(opts.sponsors.autoSkip)) { // Changed to array. No backwards compatibility needed
+        opts.sponsors.autoSkip = Opts._default.sponsors.autoSkip;
+        changed = true;
+      }
+
+      if (!('hideFromSubPage' in opts.shorts)) { // Added
+        opts.shorts.hideFromSubPage = Opts._default.shorts.hideFromSubPage;
+        changed = true;
+      }
     }
 
-    if (!('sidebar' in opts)) { // Added in v0.0.5
-      opts.sidebar = JSON.parse(JSON.stringify(Opts._default.sidebar));
-      changed = true;
+    if (optsVersion < '0.1.0') {
+      if (!('skipHotkey' in opts.sponsors)) { // Added
+        opts.sponsors.skipHotkey = JSON.parse(JSON.stringify(Opts._default.sponsors.skipHotkey));
+        changed = true;
+      }
     }
 
-    if ([true, false].includes(opts.sponsors.autoSkip)) { // Changed to array in v0.0.5. No backwards compatibility needed
-      opts.sponsors.autoSkip = Opts._default.sponsors.autoSkip;
-      changed = true;
-    }
-
-    if (!('hideFromSubPage' in opts.shorts)) {
-      opts.shorts.hideFromSubPage = Opts._default.shorts.hideFromSubPage;
+    if (currentVersion > optsVersion) {
+      opts._v = currentVersion;
       changed = true;
     }
 

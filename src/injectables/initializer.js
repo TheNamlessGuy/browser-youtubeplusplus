@@ -47,6 +47,7 @@
           if (segments.length > 0) {
             inject('mark-sponsor-segments', {
               segments: segments,
+              skipHotkey: opts.sponsors.skipHotkey,
               mark: opts.sponsors.mark,
               autoSkip: opts.sponsors.autoSkip,
             });
@@ -87,6 +88,8 @@
         let life = extras.life ?? 20;
         const interval = extras.interval ?? 250;
 
+        if (cb()) { resolve(); } // Early exit if it's already resolved
+
         const id = setInterval(() => {
           if (document.readyState === 'complete') {
             life -= 1;
@@ -105,13 +108,8 @@
       });
     },
 
-    timeout: (time) => {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    },
-
-    adIsPlaying: () => {
-      return (document.getElementsByClassName('video-ads')[0]?.children.length > 0) ?? false;
-    },
+    timeout: () => new Promise((resolve) => setTimeout(resolve, 0)),
+    adIsPlaying: () => ((document.getElementsByClassName('video-ads')[0]?.children.length > 0) ?? false),
 
     States: { // https://developers.google.com/youtube/iframe_api_reference#Events
       UNSTARTED: -1,
@@ -145,6 +143,27 @@
       progressBarContainer: () => document.getElementsByClassName('ytp-progress-bar-container')[0],
 
       currentChapter: (chapterContainer) => Array.from((chapterContainer ?? window['yt++'].elements.chapterContainer()).children).map(x => x.getElementsByClassName('ytp-play-progress')[0]).find(x => x.style.transform !== 'scaleX(1)'),
+    },
+
+    onHotkeyPressed: (hotkey, cb, extras = {}) => {
+      if (hotkey == null) { return; }
+
+      const stopPropagation = extras.stopPropagation ?? true;
+      const preventDefault = extras.preventDefault ?? true;
+
+      document.addEventListener('keyup', (e) => {
+        if (
+          e.key.toLowerCase() === hotkey.key &&
+          e.altKey === hotkey.alt &&
+          e.ctrlKey === hotkey.ctrl &&
+          e.shiftKey === hotkey.shift
+        ) {
+          cb(hotkey);
+
+          if (stopPropagation) { e.stopPropagation(); }
+          if (preventDefault) { e.preventDefault(); }
+        }
+      }, true);
     },
 
     ClassWatcher: class ClassWatcher { // https://stackoverflow.com/a/53914092
