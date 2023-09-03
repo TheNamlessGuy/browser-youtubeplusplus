@@ -5,6 +5,7 @@ const Opts = {
       defaultViewMode: 'theater',
       autoRejectCookiePopupInIncognitoMode: true,
       displayProgressBarWhenCollapsed: true,
+      hideChannelAnnotation: true,
     },
 
     ads: {
@@ -85,6 +86,13 @@ const Opts = {
     if (optsVersion < '0.1.0') {
       if (!('skipHotkey' in opts.sponsors)) { // Added
         opts.sponsors.skipHotkey = JSON.parse(JSON.stringify(Opts._default.sponsors.skipHotkey));
+        changed = true;
+      }
+    }
+
+    if (optsVersion < '0.2.0') {
+      if (!('hideChannelAnnotation' in opts.general)) { // Added
+        opts.general.hideChannelAnnotation = Opts._default.general.hideChannelAnnotation;
         changed = true;
       }
     }

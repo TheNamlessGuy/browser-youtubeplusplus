@@ -38,6 +38,7 @@
       if (opts.general.defaultViewMode != null) { inject('to-view-mode', {mode: opts.general.defaultViewMode}); }
       if (opts.chapters.showButtons) { inject('show-chapter-buttons'); }
       if (opts.general.displayProgressBarWhenCollapsed) { inject('force-showing-progressbar'); }
+      if (opts.general.hideChannelAnnotation) { inject('hide-channel-annotation'); }
 
       if (opts.sponsors.mark || opts.sponsors.autoSkip) {
         action('sponsorblock--get', {

@@ -52,13 +52,15 @@ function getAllCustomElements() {
     retval.push(...Array.from(document.getElementsByTagName(key)));
   }
 
-  return retval;
+  return retval.filter(x => ![
+    'save-using-bookmark',
+  ].includes(x.id));
 }
 
 async function load() {
   const opts = await BackgroundPage.Opts.get();
 
-  document.getElementById('save-using-bookmark').checked = await BackgroundPage.Opts.saveUsingBookmark();
+  document.getElementById('save-using-bookmark').value = await BackgroundPage.Opts.saveUsingBookmark();
 
   const elements = getAllCustomElements();
   for (const element of elements) {
@@ -77,9 +79,7 @@ async function save() {
     saveUsingBookmarkOverride: document.getElementById('save-using-bookmark').value,
   };
 
-  const elements = getAllCustomElements().filter(x => ![
-    'save-using-bookmark',
-  ].includes(x.id));
+  const elements = getAllCustomElements();
   for (const element of elements) {
     const chain = convertIDToOptChain(element.id);
     const last = chain.pop();

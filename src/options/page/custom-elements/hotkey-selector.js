@@ -27,6 +27,7 @@ class HotkeySelectorElement extends HTMLElement {
       } else {
         this._input.disabled = true;
         this._input.value = '';
+        this.dispatchEvent(new Event('change'));
       }
     });
     rhs.appendChild(this._activeCheckbox);
