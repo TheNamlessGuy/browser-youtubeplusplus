@@ -14,19 +14,18 @@
     progressBarOverlay.style.position = 'absolute';
     progressBarOverlay.style.width = '100%';
     progressBarOverlay.style.height = '100%';
-    progressBarOverlay.style.display = 'flex';
 
     window['yt++'].elements.progressBarContainer().appendChild(progressBarOverlay);
 
-    let previousEnd = 0;
-    for (const segment of segments) {
-      const inbetween = document.createElement('div');
-      inbetween.style.width = (((segment.start - previousEnd) / duration) * 100) + '%';
-      progressBarOverlay.appendChild(inbetween);
+    for (let s = 0; s < segments.length; ++s) {
+      const segment = segments[s];
 
       const block = document.createElement('div');
+      block.style.position = 'absolute';
+      block.style.left = ((segment.start / duration) * 100 ) + '%';
       block.style.width = (((segment.end - segment.start) / duration) * 100) + '%';
       block.style.height = '100%';
+      block.style.zIndex = 9999 + (segments.length - s);
       block.style.backgroundColor = {
         'sponsor':        '#8033FF',
         'selfpromo':      '#00FF00',
@@ -37,9 +36,8 @@
         'music_offtopic': '#E8FFA7',
         'filler':         '#232AFF',
       }[segment.category] ?? '#F00';
-      progressBarOverlay.appendChild(block);
 
-      previousEnd = segment.end;
+      progressBarOverlay.appendChild(block);
     }
 
     const playerOverlay = document.createElement('div');
@@ -59,7 +57,7 @@
     skipBtn.classList.add('ytp-button');
     skipBtn.addEventListener('click', () => {
       const time = player.getCurrentTime();
-      const segment = segments.find(x => x.start <= time && x.end >= time);
+      const segment = segments.find(x => x.start <= time && x.end > time);
       if (segment != null) { player.seekTo(segment.end); }
     });
     skipBtnContainer.appendChild(skipBtn);
