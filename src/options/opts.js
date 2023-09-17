@@ -6,6 +6,7 @@ const Opts = {
       autoRejectCookiePopupInIncognitoMode: true,
       displayProgressBarWhenCollapsed: true,
       hideChannelAnnotation: true,
+      disableNextButton: true,
     },
 
     ads: {
@@ -93,6 +94,13 @@ const Opts = {
     if (optsVersion < '0.2.0') {
       if (!('hideChannelAnnotation' in opts.general)) { // Added
         opts.general.hideChannelAnnotation = Opts._default.general.hideChannelAnnotation;
+        changed = true;
+      }
+    }
+
+    if (optsVersion < '0.3.0') {
+      if (!('disableNextButton' in opts.general)) { // Added
+        opts.general.disableNextButton = Opts._default.general.disableNextButton;
         changed = true;
       }
     }

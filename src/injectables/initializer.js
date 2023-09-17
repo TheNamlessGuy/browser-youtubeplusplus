@@ -33,6 +33,7 @@
       if (opts.ads.block) { inject('block-ads', {channelExceptions: opts.ads.channelExceptions}); }
       if (opts.general.blockPlayOnPageLoad) { inject('stop-initial-play'); }
       if (opts.miniplayer.disable) { inject('disable-miniplayer'); }
+      if (opts.general.disableNextButton) { inject('disable-next-button'); }
       if (opts.autoplay.default != null) { inject('toggle-autoplay', {value: opts.autoplay.default}); }
       if (opts.autoplay.hide) { inject('hide-autoplay'); }
       if (opts.general.defaultViewMode != null) { inject('to-view-mode', {mode: opts.general.defaultViewMode}); }
