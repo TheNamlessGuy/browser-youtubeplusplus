@@ -20,13 +20,3 @@ Drag and drop the file into your Firefox instance to install it.
 
 ### From Firefox AMO
 The download page is [here](https://addons.mozilla.org/firefox/addon/youtubeplusplus/)
-
-## Future plans
-* Default quality selection
-* Hide livestreams and preview/unwatchable/whatever videos from subscription page
-* "Continue watching?" popup auto-accept
-* Download video
-* Download audio
-* Download playlist as video or audio
-* Skip past the "Are you sure you want to leave YouTube?" thing when clicking on external links
-* Allow some channels to have ads
