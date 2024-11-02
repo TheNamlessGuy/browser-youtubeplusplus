@@ -20,6 +20,21 @@ function inject(url, params, overrideURL = false) {
   return script;
 }
 
+function resolveMsg(msg) {
+  if (msg.response === 'opts--get') {
+    script.dispatchEvent(new CustomEvent('yt++-opts-update', {
+      detail: JSON.stringify(msg.result),
+    }));
+  } else if (msg.action === 'opts-update') {
+    script.dispatchEvent(new CustomEvent('yt++-opts-update', {
+      detail: JSON.stringify(msg.opts),
+    }));
+  }
+}
+
+let initializerReady = false;
+const backlog = [];
+
 /**
  * We need to inject to the real JS page,
  * instead of the faux-pas one that is generated for the plugin in order to access the YT functions properly.
@@ -55,16 +70,19 @@ script.addEventListener('yt++-action', (e) => {
   port.postMessage(data);
 });
 
+script.addEventListener('yt++-initializer-ready', () => {
+  initializerReady = true;
+  while (backlog.length > 0) {
+    resolveMsg(backlog.shift());
+  }
+});
+
 const port = browser.runtime.connect();
 port.onMessage.addListener((msg) => {
-  if (msg.response === 'opts--get') {
-    script.dispatchEvent(new CustomEvent('yt++-opts-update', {
-      detail: JSON.stringify(msg.result),
-    }));
-  } else if (msg.action === 'opts-update') {
-    script.dispatchEvent(new CustomEvent('yt++-opts-update', {
-      detail: JSON.stringify(msg.opts),
-    }));
+  if (initializerReady) {
+    resolveMsg(msg);
+  } else {
+    backlog.push(msg);
   }
 });
 port.postMessage({action: 'opts--get'});

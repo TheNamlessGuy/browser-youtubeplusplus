@@ -9,7 +9,6 @@ Firefox plugin with some (optional) YouTube quality of life stuff:
 * Show chapter skip forward/back buttons
 * Mark (and optionally auto-skip) sponsor segments (uses SponsorBlock database)
 * Redirect from "shorts" to real video page
-* Ad blocking
 * Showing the video progress bar when it's normally hidden
 * Hide various sidebar entries
 

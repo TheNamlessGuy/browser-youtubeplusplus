@@ -9,11 +9,6 @@ const Opts = {
       disableNextButton: true,
     },
 
-    ads: {
-      block: true,
-      channelExceptions: [], // TODO
-    },
-
     autoplay: {
       default: false,
       hide: true,
@@ -56,11 +51,6 @@ const Opts = {
     const optsVersion = opts._v ?? '0.0.0';
 
     if (optsVersion < '0.0.3') {
-      if (!('ads' in opts)) { // Added
-        opts.ads = JSON.parse(JSON.stringify(Opts._default.ads));
-        changed = true;
-      }
-
       if (!('displayProgressBarWhenCollapsed' in opts.general)) { // Added
         opts.general.displayProgressBarWhenCollapsed = Opts._default.general.displayProgressBarWhenCollapsed;
         changed = true;

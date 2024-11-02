@@ -25,17 +25,18 @@
       block.style.left = ((segment.start / duration) * 100 ) + '%';
       block.style.width = (((segment.end - segment.start) / duration) * 100) + '%';
       block.style.height = '100%';
+      block.style.pointerEvents = 'none';
       block.style.zIndex = 9999 + (segments.length - s);
       block.style.backgroundColor = {
-        'sponsor':        '#8033FF',
-        'selfpromo':      '#00FF00',
-        'interaction':    '#FF5733',
-        'intro':          '#33E9FF',
-        'outro':          '#E6FF33',
-        'preview':        '#FFA7FB',
-        'music_offtopic': '#E8FFA7',
-        'filler':         '#232AFF',
-      }[segment.category] ?? '#F00';
+        'sponsor':        'rgba(128, 51, 255, 0.5)',
+        'selfpromo':      'rgba(0, 255, 0, 0.5)',
+        'interaction':    'rgba(255, 87, 51, 0.5)',
+        'intro':          'rgba(51, 233, 255, 0.5)',
+        'outro':          'rgba(230, 255, 51, 0.5)',
+        'preview':        'rgba(255, 167, 251, 0.5)',
+        'music_offtopic': 'rgba(232, 255, 167, 0.5)',
+        'filler':         'rgba(35, 42, 255, 0.5)',
+      }[segment.category] ?? 'rgba(255, 0, 0, 0.5)';
 
       progressBarOverlay.appendChild(block);
     }
@@ -78,6 +79,16 @@
         const time = player.getCurrentTime();
         const segment = segments.find(x => x.start <= time && x.end > time);
         playerOverlay.style.display = segment == null ? 'none' : null;
+        text.innerText = 'Skip ' + {
+          'sponsor': 'Sponsor Segment',
+          'selfpromo': 'Self-promotion Segment',
+          'interaction': 'Interaction Segment',
+          'intro': 'Intro',
+          'outro': 'Outro',
+          'preview': 'Preview Segment',
+          'music_offtopic': 'Off-topic Music Segment',
+          'filler': 'Filler Segment',
+        }[segment.category] ?? 'Sponsor Segment';
       }
     });
 

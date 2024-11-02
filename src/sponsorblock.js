@@ -10,6 +10,7 @@ const SponsorBlock = {
     }
 
     const response = await fetch(url.toString());
+    if (!response.ok) { return []; }
     const arr = await response.json();
     return arr.map(x => { return {start: x.segment[0], end: x.segment[1], category: x.category}; }).sort((a, b) => a.start - b.start);
   },

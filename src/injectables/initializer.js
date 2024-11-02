@@ -30,7 +30,6 @@
     if (opts.sidebar.hideMoreFromYt) { inject('hide-more-from-yt-from-sidebar'); }
     if (opts.sidebar.hideBrowseChannelsFromSubscriptions) { inject('hide-browse-channels-from-sidebar'); }
     if (url.pathname === '/watch') {
-      if (opts.ads.block) { inject('block-ads', {channelExceptions: opts.ads.channelExceptions}); }
       if (opts.general.blockPlayOnPageLoad) { inject('stop-initial-play'); }
       if (opts.miniplayer.disable) { inject('disable-miniplayer'); }
       if (opts.general.disableNextButton) { inject('disable-next-button'); }
@@ -199,4 +198,5 @@
   };
 
   window['yt++'].incognito = window['yt++'].data.bool('incognito');
+  currentScript.dispatchEvent(new CustomEvent('yt++-initializer-ready'));
 }());
