@@ -5,18 +5,14 @@
    * If we get a mousemove event that ISN'T faked, we assume it was made by the user, and we stop forcing it to the bottom (until the next hide event).
    */
 
+  await window['yt++'].waitForOptional(() => document.getElementById('movie_player') != null);
+  const moviePlayer = document.getElementById('movie_player');
+  if (moviePlayer == null) { return; }
+
   await window['yt++'].waitForOptional(() => document.getElementsByClassName('ytp-chrome-bottom')[0] != null);
   const bottom = document.getElementsByClassName('ytp-chrome-bottom')[0];
   if (bottom == null) { return; }
   const bottomHeight = bottom.getBoundingClientRect().height;
-
-  await window['yt++'].waitForOptional(() => document.getElementsByClassName('ytp-chrome-top')[0] != null);
-  const top = document.getElementsByClassName('ytp-chrome-top')[0];
-  if (top == null) { return; }
-
-  await window['yt++'].waitForOptional(() => document.getElementsByClassName('ytp-gradient-top')[0] != null);
-  const gradient = document.getElementsByClassName('ytp-gradient-top')[0];
-  if (gradient == null) { return; }
 
   await window['yt++'].waitForOptional(() => document.getElementsByClassName('ytp-progress-bar-container')[0] != null);
   const container = bottom.getElementsByClassName('ytp-progress-bar-container')[0];
@@ -25,9 +21,11 @@
 
   const style = document.createElement('style');
   style.textContent = `
-.ytp-chrome-bottom.ytpp-hide { opacity: 0.3 !important; bottom: -${bottomHeight - containerHeight}px !important; }
-.ytp-chrome-top.ytpp-hide { display: none; }
-.ytp-gradient-top.ytpp-hide { display: none; }
+#movie_player.ytpp-hide { cursor: none; }
+#movie_player.ytpp-hide .ytp-chrome-bottom { opacity: 0.3 !important; bottom: -${bottomHeight - containerHeight}px !important; }
+#movie_player.ytpp-hide .ytp-chrome-top { display: none; }
+#movie_player.ytpp-hide .ytp-gradient-top { display: none; }
+#movie_player.ytpp-hide .ytp-scrubber-button { width: 0; }
 `;
   document.head.appendChild(style);
 
@@ -47,9 +45,7 @@
     if (firstTime) {
       firstTime = false;
       actuallyHidden = true;
-      top.classList.add('ytpp-hide');
-      bottom.classList.add('ytpp-hide');
-      gradient.classList.add('ytpp-hide');
+      moviePlayer.classList.add('ytpp-hide');
     }
 
     player.parentElement.removeEventListener('mousemove', listener, true);
@@ -67,9 +63,7 @@
   }, () => {
     if (!actuallyHidden) {
       firstTime = true;
-      top.classList.remove('ytpp-hide');
-      bottom.classList.remove('ytpp-hide');
-      gradient.classList.remove('ytpp-hide');
+      moviePlayer.classList.remove('ytpp-hide');
     }
   });
 }());
